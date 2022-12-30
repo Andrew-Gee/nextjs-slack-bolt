@@ -10,6 +10,10 @@ slackApp.createSlackApp();
 slackApp.app.event('message', async ({ event, say }: { event: any; say: any }) => {
   const text = (event as any).text;
 
+  if (!text) {
+    return
+  }
+
   if (text.startsWith("gpt ")) {
     let message: string = text.split("gpt ")[1];
 
