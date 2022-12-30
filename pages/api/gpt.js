@@ -1,6 +1,6 @@
-import { Configuration, OpenAIApi } from "openai"
+import * as slackApp from '../../slack/slack_app.js';
 
-import { App } from "@slack/bolt"
+import { Configuration, OpenAIApi } from "openai"
 
 export default async function handler(req, res) {
     const configuration = new Configuration({
@@ -23,12 +23,7 @@ export default async function handler(req, res) {
     if (response && response.data && response.data.choices && response.data.choices.length > 0) {
         let gptResponse = response.data.choices[0].text.trim()
 
-        const app = new App({
-            token: process.env.SLACK_BOT_TOKEN,
-            developerMode: false,
-        })
-
-        await app.client.chat.postMessage({
+        await slackApp.app.client.chat.postMessage({
             channel: res.body.channel,
             text: gptResponse
         })
