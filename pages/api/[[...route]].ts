@@ -13,15 +13,15 @@ slackApp.app.event('message', async ({ event, say }: { event: any; say: any }) =
   if (text.startsWith("gpt ")) {
     let message: string = text.split("gpt ")[1];
 
+    let slackMessage = await slackApp.app.client.chat.postMessage({
+      channel: event.channel,
+      text: "Please wait..."
+    });
+
     axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
       prompt: message,
       channel: event.channel,
-      ts: event.ts
-    });
-
-    await slackApp.app.client.chat.postMessage({
-      channel: event.channel,
-      text: "Please wait..."
+      ts: slackMessage.ts
     });
 
   }
