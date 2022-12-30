@@ -21,13 +21,13 @@ slackApp.app.event('message', async ({ event, say }: { event: any; say: any }) =
       text: "..."
     });
 
-    setTimeout(() => {
-      axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
-        prompt: message,
-        channel: event.channel,
-        ts: slackMessage.ts
-      });
+    axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
+      prompt: message,
+      channel: event.channel,
+      ts: slackMessage.ts
     });
+
+    await new Promise(resolve => setTimeout(resolve, 500));
 
   }
 });
