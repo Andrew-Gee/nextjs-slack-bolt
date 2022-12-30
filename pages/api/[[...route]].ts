@@ -17,11 +17,13 @@ slackApp.app.event('message', async ({ event, say }: { event: any; say: any }) =
       prompt: message,
       channel: event.channel,
       ts: event.ts
-    })
-
-    await say({
-      text: "Please wait...",
     });
+
+    await slackApp.app.client.chat.postMessage({
+      channel: event.channel,
+      text: "Please wait..."
+    });
+
   }
 });
 
