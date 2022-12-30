@@ -1,5 +1,6 @@
-import { App } from '@slack/bolt';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { App } from '@slack/bolt';
 import NextConnectReceiver from 'utils/NextConnectReceiver';
 
 const receiver = new NextConnectReceiver({
@@ -20,7 +21,7 @@ const app = new App({
 
 app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
-  say({
+  await say({
     text: text || 'Hello world!',
   });
 });
