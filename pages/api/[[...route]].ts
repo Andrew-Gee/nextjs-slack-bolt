@@ -24,6 +24,10 @@ app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
 
   if (text.startsWith("gpt ")) {
+    await say({
+      text: "Please wait...",
+    });
+
     let message: string = text.split("gpt ")[1];
 
     const configuration = new Configuration({
@@ -32,7 +36,7 @@ app.event('message', async ({ event, say }) => {
 
     const openai = new OpenAIApi(configuration);
 
-    const response: any = openai.createCompletion({
+    const response: any = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: message,
       temperature: 0.7,
@@ -41,10 +45,6 @@ app.event('message', async ({ event, say }) => {
       frequency_penalty: 0,
       presence_penalty: 0,
       echo: true
-    });
-
-    await say({
-      text: "Please wait...",
     });
 
     if (response && response.data && response.data.choices && response.data.choices.length > 0) {
