@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { App } from '@slack/bolt';
 import NextConnectReceiver from 'utils/NextConnectReceiver';
+import axios from 'axios'
 
 const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || 'invalid',
@@ -24,34 +25,16 @@ app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
 
   if (text.startsWith("gpt ")) {
+    let message: string = text.split("gpt ")[1];
+
+    axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
+      prompt: message,
+      channel: event.channel
+    })
+
     await say({
       text: "Please wait...",
     });
-
-    let message: string = text.split("gpt ")[1];
-
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const openai = new OpenAIApi(configuration);
-
-    const response: any = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: message,
-      temperature: 0.7,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-      echo: true
-    });
-
-    if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-      say({
-        text: response.data.choices[0].text.trim(),
-      });
-    }
   }
 });
 
