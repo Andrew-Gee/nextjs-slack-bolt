@@ -25,7 +25,6 @@ export default async function handler(req, res) {
 
         const app = new App({
             token: process.env.SLACK_BOT_TOKEN,
-            receiver: receiver,
             developerMode: false,
         })
 
