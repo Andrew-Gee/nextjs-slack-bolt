@@ -3,6 +3,12 @@ import * as slackApp from '../../slack/slack_app.js';
 import { Configuration, OpenAIApi } from "openai"
 
 export default async function handler(req, res) {
+    slackApp.app.client.chat.update({
+        channel: req.body.channel,
+        ts: req.body.ts,
+        text: "......"
+    })
+
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     })
