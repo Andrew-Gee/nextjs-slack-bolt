@@ -23,8 +23,9 @@ export default async function handler(req, res) {
     if (response && response.data && response.data.choices && response.data.choices.length > 0) {
         let gptResponse = response.data.choices[0].text.trim()
 
-        await slackApp.app.client.chat.postMessage({
+        await slackApp.app.client.chat.update({
             channel: req.body.channel,
+            ts: req.body.ts,
             text: gptResponse
         })
     }

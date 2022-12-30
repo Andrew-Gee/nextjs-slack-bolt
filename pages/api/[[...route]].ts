@@ -15,7 +15,8 @@ slackApp.app.event('message', async ({ event, say }: { event: any; say: any }) =
 
     axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
       prompt: message,
-      channel: event.channel
+      channel: event.channel,
+      ts: event.ts
     })
 
     await say({
