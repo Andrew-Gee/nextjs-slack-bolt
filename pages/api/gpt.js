@@ -4,14 +4,6 @@ import { WebClient } from '@slack/web-api'
 
 const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
 
-async function waitForObject(object) {
-    let timeout = 60000 // 1 minute in ms
-    let startTime = Date.now()
-    while (object == null && (Date.now() - startTime) < timeout) {
-        await new Promise(resolve => setTimeout(resolve, 100))
-    }
-}
-
 export default async function handler(req, res) {
     const web = new WebClient(process.env.SLACK_BOT_TOKEN)
 

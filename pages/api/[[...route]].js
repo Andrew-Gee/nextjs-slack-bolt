@@ -13,21 +13,22 @@ slackApp.app.event('message', async ({ event, say }) => {
 
   message += "\r\nYou must use markdown when showing me code"
 
-  // let slackMessage = await say({
-  //   text: "..."
-  // })
-
+  
   axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
     prompt: message,
     channel: event.channel
   })
-
-  await slackApp.app.client.chat.postEphemeral({
-    token: process.env.SLACK_BOT_TOKEN,
-    channel: event.channel,
-    user: event.user,
-    text: "Loading"
+  
+  await say({
+    text: ""
   })
+
+  // await slackApp.app.client.chat.postEphemeral({
+  //   token: process.env.SLACK_BOT_TOKEN,
+  //   channel: event.channel,
+  //   user: event.user,
+  //   text: "Loading"
+  // })
 
   await new Promise(resolve => setTimeout(resolve, 500))
 })
