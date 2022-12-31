@@ -37,7 +37,7 @@ export default async function handler(req, res) {
         let gptResponse = response.data.choices[0].text.trim()
 
         gptResponse = gptResponse.replace(markdownLanguageRegex, "$1$3")
-        gptResponse = gptResponse.replace("**", "*")
+        gptResponse = gptResponse.replaceAll("**", "*")
 
         if (gptResponse.startsWith(".\n")) {
             gptResponse = gptResponse.split(".\n")[1]
