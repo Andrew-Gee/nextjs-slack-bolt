@@ -2,7 +2,7 @@ import * as slackApp from '../../slack/slack_app.js'
 
 import { Configuration, OpenAIApi } from "openai"
 
-const markdownLanguageRegex = /(```)\n?([a-z]+)(\n.+?\n```)/gis
+const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
 
 export default async function handler(req, res) {
     if (!slackApp.app) {
