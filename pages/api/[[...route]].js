@@ -5,7 +5,7 @@ import axios from 'axios'
 slackApp.createSlackApp()
 
 slackApp.app.event('message', async ({ event, say }) => {
-  const message = event.text
+  let message = event.text
 
   if (!message) {
     return
