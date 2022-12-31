@@ -4,10 +4,22 @@ import { Configuration, OpenAIApi } from "openai"
 
 const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
 
+async function waitForObject(object) {
+    let timeout = 60000 // 1 minute in ms
+    let startTime = Date.now()
+    while (object == null && (Date.now() - startTime) < timeout) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+    }
+}
+
 export default async function handler(req, res) {
     if (!slackApp.app) {
-        res.end()
-        return
+        await waitForObject(slackApp.app)
+
+        if (!slackApp.app) {
+            res.end()
+            return
+        }
     }
 
     slackApp.app.client.chat.update({
