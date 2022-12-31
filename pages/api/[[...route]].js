@@ -23,6 +23,13 @@ slackApp.app.event('message', async ({ event, say }) => {
     ts: slackMessage.ts
   })
 
+  await slackApp.app.client.chat.postEphemeral({
+    token: process.env.SLACK_BOT_TOKEN,
+    channel: event.channel,
+    user: event.user,
+    text: "Loading"
+  })
+
   await new Promise(resolve => setTimeout(resolve, 500))
 })
 
