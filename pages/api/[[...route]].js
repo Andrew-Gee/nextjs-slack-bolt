@@ -11,7 +11,7 @@ slackApp.app.event('message', async ({ event, say }) => {
     return
   }
 
-  message += "\r\nIf the answer includes code, please include it in markdown code blocks."
+  message += "\r\nIf the answer includes code or sql, please include it in markdown code blocks."
 
   axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
     prompt: message,
