@@ -2,7 +2,7 @@ import * as slackApp from '../../slack/slack_app.js'
 
 import { Configuration, OpenAIApi } from "openai"
 
-const markdownLanguageRegex = /(```)([a-z]+)(\n.+\n```)/gi
+const markdownLanguageRegex = /(```)([a-z]+)(\n.+\n```)/gis
 
 export default async function handler(req, res) {
     slackApp.app.client.chat.update({
