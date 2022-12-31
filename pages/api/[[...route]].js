@@ -14,7 +14,7 @@ slackApp.app.event('message', async ({ event, say }) => {
   if (text.startsWith("gpt ")) {
     let message = text.split("gpt ")[1]
 
-    // message += "\r\nif your answer contains any software source code, please wrap each block of code with 3 simple backticks"
+    message += "\r\nYou must use markdown when showing me code"
 
     let slackMessage = await say({
       text: "..."

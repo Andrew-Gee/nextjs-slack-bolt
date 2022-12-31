@@ -1,6 +1,8 @@
-import * as slackApp from '../../slack/slack_app.js';
+import * as slackApp from '../../slack/slack_app.js'
 
 import { Configuration, OpenAIApi } from "openai"
+
+const markdownLanguageRegex = /(```)([a-z]+)(\n.+\n```)/gi
 
 export default async function handler(req, res) {
     slackApp.app.client.chat.update({
@@ -28,6 +30,8 @@ export default async function handler(req, res) {
 
     if (response && response.data && response.data.choices && response.data.choices.length > 0) {
         let gptResponse = response.data.choices[0].text.trim()
+
+        gptResponse = gptResponse.replace(markdownLanguageRegex, "$1$3")
 
         await slackApp.app.client.chat.update({
             channel: req.body.channel,
