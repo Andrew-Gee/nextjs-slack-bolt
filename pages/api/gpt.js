@@ -5,6 +5,10 @@ import { Configuration, OpenAIApi } from "openai"
 const markdownLanguageRegex = /(```)([a-z]+)(\n.+?\n```)/gis
 
 export default async function handler(req, res) {
+    if (!slackApp.app) {
+        res.end()
+    }
+
     slackApp.app.client.chat.update({
         channel: req.body.channel,
         ts: req.body.ts,
@@ -40,5 +44,5 @@ export default async function handler(req, res) {
         })
     }
 
-    res.status(200).json(null)
+    res.end()
 }
