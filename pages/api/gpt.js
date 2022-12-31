@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai"
 
 import { WebClient } from '@slack/web-api'
 
-const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
+const markdownLanguageRegex = /(```)([a-z#]+)(\s+.+?\s+```)/gis
 
 export default async function handler(req, res) {
     const web = new WebClient(process.env.SLACK_BOT_TOKEN)
