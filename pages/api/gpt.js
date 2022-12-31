@@ -7,12 +7,6 @@ const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
 export default async function handler(req, res) {
     const web = new WebClient(process.env.SLACK_BOT_TOKEN)
 
-    // await web.chat.update({
-    //     channel: req.body.channel,
-    //     ts: req.body.ts,
-    //     text: "......"
-    // })
-
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     })
@@ -39,13 +33,7 @@ export default async function handler(req, res) {
         if (gptResponse.startsWith(".\n")) {
             gptResponse = gptResponse.split(".\n")[1]
         }
-
-        // await web.chat.update({
-        //     channel: req.body.channel,
-        //     ts: req.body.ts,
-        //     text: gptResponse
-        // })
-
+        
         await web.chat.postMessage({
             channel: req.body.channel,
             text: gptResponse

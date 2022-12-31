@@ -11,24 +11,12 @@ slackApp.app.event('message', async ({ event, say }) => {
     return
   }
 
-  message += "\r\nIf the answer includes code, please include it in markdown"
+  message += "\r\nIf the answer includes code, please include it in markdown code blocks."
 
-  
   axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
     prompt: message,
     channel: event.channel
   })
-  
-  // await say({
-  //   text: ""
-  // })
-
-  // await slackApp.app.client.chat.postEphemeral({
-  //   token: process.env.SLACK_BOT_TOKEN,
-  //   channel: event.channel,
-  //   user: event.user,
-  //   text: "Loading"
-  // })
 
   await new Promise(resolve => setTimeout(resolve, 500))
 })
