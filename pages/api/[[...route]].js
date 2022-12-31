@@ -11,14 +11,11 @@ slackApp.app.event('message', async ({ event, say }) => {
     return
   }
 
-  // if (text.startsWith("gpt ")) {
-  //   let message = text.split("gpt ")[1]
-
   message += "\r\nYou must use markdown when showing me code"
 
-  let slackMessage = await say({
-    text: "..."
-  })
+  // let slackMessage = await say({
+  //   text: "..."
+  // })
 
   axios.post('https://nextjs-slack-bolt.vercel.app/api/gpt', {
     prompt: message,
@@ -27,7 +24,6 @@ slackApp.app.event('message', async ({ event, say }) => {
   })
 
   await new Promise(resolve => setTimeout(resolve, 500))
-  // }
 })
 
 // this is run just in case

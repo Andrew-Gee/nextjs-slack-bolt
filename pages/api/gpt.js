@@ -13,7 +13,7 @@ async function waitForObject(object) {
 }
 
 export default async function handler(req, res) {
-    const web = new WebClient(process.env.SLACK_BOT_TOKEN);
+    const web = new WebClient(process.env.SLACK_BOT_TOKEN)
 
     // await web.chat.update({
     //     channel: req.body.channel,
@@ -48,9 +48,14 @@ export default async function handler(req, res) {
             gptResponse = gptResponse.split(".\n")[1]
         }
 
-        await web.chat.update({
+        // await web.chat.update({
+        //     channel: req.body.channel,
+        //     ts: req.body.ts,
+        //     text: gptResponse
+        // })
+
+        await web.chat.postMessage({
             channel: req.body.channel,
-            ts: req.body.ts,
             text: gptResponse
         })
     }
