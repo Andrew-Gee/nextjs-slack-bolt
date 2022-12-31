@@ -2,7 +2,7 @@ import * as slackApp from '../../slack/slack_app.js'
 
 import { Configuration, OpenAIApi } from "openai"
 
-const markdownLanguageRegex = /(```)([a-z]+)(\n.+?\n```)/gis
+const markdownLanguageRegex = /(```)\n?([a-z]+)(\n.+?\n```)/gis
 
 export default async function handler(req, res) {
     if (!slackApp.app) {
@@ -37,6 +37,10 @@ export default async function handler(req, res) {
         let gptResponse = response.data.choices[0].text.trim()
 
         gptResponse = gptResponse.replace(markdownLanguageRegex, "$1$3")
+
+        if (gptResponse.startsWith(".\n")) {
+            gptResponse = gptResponse.split(".\n")[1]
+        }
 
         await slackApp.app.client.chat.update({
             channel: req.body.channel,
