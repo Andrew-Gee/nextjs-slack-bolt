@@ -7,6 +7,7 @@ const markdownLanguageRegex = /(```)([a-z]+)(\n.+?\n```)/gis
 export default async function handler(req, res) {
     if (!slackApp.app) {
         res.end()
+        return
     }
 
     slackApp.app.client.chat.update({
