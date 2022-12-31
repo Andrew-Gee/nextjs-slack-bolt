@@ -19,9 +19,9 @@ slackApp.app.event('message', async ({ event, say }) => {
     channel: event.channel
   })
   
-  await say({
-    text: ""
-  })
+  // await say({
+  //   text: ""
+  // })
 
   // await slackApp.app.client.chat.postEphemeral({
   //   token: process.env.SLACK_BOT_TOKEN,
