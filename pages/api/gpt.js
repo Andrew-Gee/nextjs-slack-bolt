@@ -1,6 +1,6 @@
-import * as slackApp from '../../slack/slack_app.js'
-
 import { Configuration, OpenAIApi } from "openai"
+
+import { WebClient } from '@slack/web-api'
 
 const markdownLanguageRegex = /(```)([a-z]+)(\s+.+?\s+```)/gis
 
@@ -13,16 +13,9 @@ async function waitForObject(object) {
 }
 
 export default async function handler(req, res) {
-    if (!slackApp.app) {
-        await waitForObject(slackApp.app)
+    const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
-        if (!slackApp.app) {
-            res.end()
-            return
-        }
-    }
-
-    slackApp.app.client.chat.update({
+    await web.chat.update({
         channel: req.body.channel,
         ts: req.body.ts,
         text: "......"
@@ -55,7 +48,7 @@ export default async function handler(req, res) {
             gptResponse = gptResponse.split(".\n")[1]
         }
 
-        await slackApp.app.client.chat.update({
+        await web.chat.update({
             channel: req.body.channel,
             ts: req.body.ts,
             text: gptResponse
